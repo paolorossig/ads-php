@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+    <link rel="stylesheet" href="styles/main.css" />
+    <title>Good Cookie</title>
+  </head>
+  <body>
+    <section id="login">
+      <div class="login_container">
+        <a href="#">
+          <h1><span>Good</span> Cookies</h1>
+        </a>
+        <p>Regístrate para iniciar sesión</p>
+        <form action="login.php" method="POST">
+          <div class="login_fields">
+            <input type="email" name="email" placeholder="Email" required />
+            <input
+              type="password"
+              name="password"
+              placeholder="Contraseña"
+              required
+            />
+            <div class="login_checkbox">
+              <input type="checkbox" id="remember" />
+              <label for="remember">Recuérdame</label>
+            </div>
+          </div>
+          <div class="login_buttons">
+            <button type="submit">Ingresar</button>
+          </div>
+        </form>
+        <a href="dashboard.html" class="login_link">Me olvide mi contraseña</a>
+      </div>
+    </section>
+  </body>
+</html>
