@@ -2,6 +2,7 @@
 
 :root {
   --primary: #fed136;
+  --secondary: #ce793c;
 }
 
 * {
@@ -15,8 +16,13 @@ button {
   cursor: pointer;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  border: 0;
+  border: 1px solid transparent;
   background-color: var(--primary);
+}
+
+.secondary {
+  color: white;
+  background-color: #ccc;
 }
 
 a {
@@ -29,11 +35,11 @@ ul {
 }
 
 table {
+  width: 100%;
+  table-layout: fixed;
   border-radius: 0.5rem;
   border-collapse: collapse;
   background-color: white;
-  width: 100%;
-  table-layout: fixed;
 }
 
 th {
@@ -54,6 +60,20 @@ input {
   padding: 7px;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
+  width: 100%;
+}
+
+select {
+  width: 100%;
+  padding: 7px;
+  max-width: 400px;
+  margin-left: 1rem;
+  border-radius: 0.5rem;
+}
+
+[type='checkbox'] {
+  width: 13px;
+  height: 13px;
 }
 
 .search {
@@ -61,11 +81,13 @@ input {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  margin: 1rem 0 2rem;
+  margin: 1rem 0;
 }
 
-.search input {
-  width: 100%;
-  max-width: 400px;
-  margin-left: 1rem;
+.table_and_buttons {
+  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  margin: 1rem 0;
 }

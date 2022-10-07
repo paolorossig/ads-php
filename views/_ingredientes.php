@@ -1,70 +1,85 @@
+<?php
+    $codUsuario = $_SESSION['codUsuario'];
+    $enlace = mysqli_connect("localhost", "root", "", "GoodCookies");
+
+    $sentencia_producto = "select p.* from producto p
+                            join productoxcolaborador pxc on p.cod = pxc.codProducto
+                            join colaborador c on c.cod = pxc.codColaborador
+                        where c.codUsuario='$codUsuario';";
+    $resultado_producto = mysqli_query($enlace, $sentencia_producto);
+    $registro_producto = mysqli_fetch_row($resultado_producto);
+
+    $codProducto = $registro_producto[0];
+    
+    $sentencia_ordenes = "select * from orden where codProducto='$codProducto' and estado = 'Pendiente';";
+    $resultado_ordenes = mysqli_query($enlace, $sentencia_ordenes);
+
+    $sentencia_ingrediente = "select i.nombre, ixp.cantidad, i.unidad from ingrediente i
+                                join ingredientexproducto ixp on i.cod = ixp.codIngrediente
+                            where ixp.codProducto='$codProducto';";
+    $resultado_ingrediente = mysqli_query($enlace, $sentencia_ingrediente);
+?>
 <h1>Ingredientes</h1>
-<section>
-    <form action="ingredientes.php" method="POST">
-        <div class="search">
-            <label for="quantity">Cantidad a producir:</label>
-            <input type="number" name="quantity" />
-            <button type="submit">Calcular</button>
-        </div>
-    </form>
-    <?php
-        if (isset($_POST["quantity"])) {
-            echo "quantity: " . $_POST["quantity"];
-        }
-    ?>
-    <table>
-        <thead>
-            <tr>
-                <th>Ingrediente</th>
-                <th>Cantidad</th>
-                <th>Unidad</th>
-                <th>Stock</th>
-                <th>Faltante</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Harina</td>
-                <td>100</td>
-                <td>Gramos</td>
-                <td>1000</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Leche</td>
-                <td>100</td>
-                <td>Gramos</td>
-                <td>1000</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Huevo</td>
-                <td>100</td>
-                <td>Gramos</td>
-                <td>1000</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Azucar</td>
-                <td>100</td>
-                <td>Gramos</td>
-                <td>1000</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Sal</td>
-                <td>100</td>
-                <td>Gramos</td>
-                <td>1000</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Chocolate</td>
-                <td>100</td>
-                <td>Gramos</td>
-                <td>1000</td>
-                <td>0</td>
-            </tr>
-        </tbody>
-    </table>
-</section>
+<form action="ingredientes.php" method="GET">
+    <div class="search">
+        <label for="codOrden">Órden a producir:</label>
+        <select name="codOrden">
+            <option value="">Escoger la orden pendiente</option>
+            <?php
+                $codOrden = $_GET["codOrden"];
+                echo $codOrden;
+                while ($row_orden = $resultado_ordenes->fetch_row()) {
+                    if (isset($codOrden) and $codOrden == $row_orden[0]) {
+                        echo "<option value=".$row_orden[0]." selected>#00".$row_orden[0]."</option>";
+                    } else {
+                        echo "<option value=".$row_orden[0].">#00".$row_orden[0]."</option>";
+                    }
+                    
+                }
+            ?>
+        </select>
+        <button type="submit">Calcular</button>
+    </div>
+</form>
+<form action="solicitud-alamacen.php" method="POST">
+    <div class="table_and_buttons">
+        <table>
+            <thead>
+                <tr>
+                    <th>Ingrediente</th>
+                    <th>Cantidad</th>
+                    <th>Unidad</th>
+                    <th>Stock</th>
+                    <th>Faltante</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    if (isset($codOrden)) {
+                        $enlace = mysqli_connect("localhost", "root", "", "GoodCookies");
+                        $sentencia_orden = "select cantidad from orden where cod='$codOrden';";
+                        $resultado_orden = mysqli_query($enlace, $sentencia_orden);
+                        $registro_orden = mysqli_fetch_row($resultado_orden);
+                        $cantidadOrden = $registro_orden[0];
+                    }
+
+                    while ($row_ingrediente = $resultado_ingrediente->fetch_row()) {
+                        $cantidad = $row_ingrediente[1] * $cantidadOrden;
+                        $stock = 0;
+                        $faltante = $cantidad - $stock;
+                ?>
+                <tr>
+                    <td><?php echo $row_ingrediente[0]; ?></td>
+                    <td><?php echo $cantidad; ?></td>
+                    <td><?php echo $row_ingrediente[2]; ?></td>
+                    <td><?php echo $stock; ?></td>
+                    <td><?php echo $faltante; ?></td>
+                </tr>
+                <?php     
+                    }
+                ?>
+            </tbody>
+        </table>
+        <button>Solicitar a Alamcén</button>
+    </div>
+</form>

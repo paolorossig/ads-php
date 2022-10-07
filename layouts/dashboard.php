@@ -25,14 +25,14 @@
     <section id="dashboard">
       <nav>
         <h1>
-          <a href="inicio.php">
+          <a href="index.html">
             <span>Good</span> Cookies
           </a>
         </h1>
         <menu>
           <ul>
             <?php
-            $currentMenu = str_replace(".php", "", explode("/", $_SERVER['REQUEST_URI'])[1]);
+            $currentMenu = explode(".php", explode("/", $_SERVER['REQUEST_URI'])[1])[0];
             while ($row_menu = $resultado_menu->fetch_row()) {
                 if ($row_menu[3] == $currentMenu) {
                     echo "<li class='active'><a href='$row_menu[3].php'>$row_menu[2]</a></li>";
@@ -42,11 +42,14 @@
             }
             ?>
           </ul>
+          <div class="menu-buttons">
+            <a href="functions/logout.php" class="logout">Cerrar sesión</a>
+          </div>
         </menu>
       </nav>
-      <div class="dashboard_rigth">
+      <div class="dashboard_right">
         <header>
-          <a href="#">
+          <a href="perfil.php">
             <div class="user_profile_card">
               <img
                 src="https://res.cloudinary.com/paolorossi/image/upload/v1652998240/spotiparty/user_placeholder_zpoic6.png"
