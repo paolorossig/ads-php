@@ -85,6 +85,13 @@
 }
 /*****************/
 
+#dashboard main h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: gray;
+}
+
 .dashboard_right {
   flex: 1;
   display: flex;
@@ -171,4 +178,12 @@
   gap: 1rem;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+}
+
+.positive {
+  color: green;
+}
+
+.negative {
+  color: red;
 }

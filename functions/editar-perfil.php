@@ -13,8 +13,6 @@
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    echo $nombres;
-
     $enlace = mysqli_connect("localhost","root","","GoodCookies");
     $sentencia_colaborador = "UPDATE colaborador SET
                                     nombres='$nombres',

@@ -14,10 +14,10 @@
     $sentencia_ordenes = "select * from orden where codProducto='$codProducto' and estado = 'Pendiente';";
     $resultado_ordenes = mysqli_query($enlace, $sentencia_ordenes);
 
-    $sentencia_ingrediente = "select i.nombre, ixp.cantidad, i.unidad from ingrediente i
-                                join ingredientexproducto ixp on i.cod = ixp.codIngrediente
-                            where ixp.codProducto='$codProducto';";
-    $resultado_ingrediente = mysqli_query($enlace, $sentencia_ingrediente);
+    $sentencia_materiaprima = "select mp.nombre, mpxp.cantidad, mp.unidad from materiaprima mp
+                                join materiaprimaxproducto mpxp on mp.cod = mpxp.codMateriaprima
+                            where mpxp.codProducto='$codProducto';";
+    $resultado_materiaprima = mysqli_query($enlace, $sentencia_materiaprima);
 ?>
 <h1>Ingredientes</h1>
 <form action="ingredientes.php" method="GET">
@@ -63,15 +63,15 @@
                         $cantidadOrden = $registro_orden[0];
                     }
 
-                    while ($row_ingrediente = $resultado_ingrediente->fetch_row()) {
-                        $cantidad = $row_ingrediente[1] * $cantidadOrden;
+                    while ($row_materiaprima = $resultado_materiaprima->fetch_row()) {
+                        $cantidad = $row_materiaprima[1] * $cantidadOrden;
                         $stock = 0;
                         $faltante = $cantidad - $stock;
                 ?>
                 <tr>
-                    <td><?php echo $row_ingrediente[0]; ?></td>
+                    <td><?php echo $row_materiaprima[0]; ?></td>
                     <td><?php echo $cantidad; ?></td>
-                    <td><?php echo $row_ingrediente[2]; ?></td>
+                    <td><?php echo $row_materiaprima[2]; ?></td>
                     <td><?php echo $stock; ?></td>
                     <td><?php echo $faltante; ?></td>
                 </tr>

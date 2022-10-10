@@ -91,3 +91,34 @@ select {
   align-items: end;
   margin: 1rem 0;
 }
+
+.buttons_container {
+  display: flex;
+  padding: 2rem 0;
+  justify-content: space-between;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.galletas {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 2rem;
+}
+
+.galletas article {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: white;
+}
+
+.galletas article:hover {
+  cursor: pointer;
+  box-shadow: 5px 5px 40px -15px rgba(0, 0, 0, 0.5);
+}
+
+.galletas img {
+  width: 300px;
+  height: 400px;
+  object-fit: cover;
+}

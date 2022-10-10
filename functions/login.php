@@ -25,11 +25,13 @@
             $resultado_colaborador = mysqli_query($enlace, $sentencia);
             $registro_colaborador = mysqli_fetch_row($resultado_colaborador);
 
+            $area = $registro_colaborador[4];
             $rol = $registro_colaborador[5];
             $displayName = $registro_colaborador[2]." ".$registro_colaborador[3];
 
             $_SESSION["codUsuario"] = $codUsuario;
             $_SESSION["displayName"] = $displayName;
+            $_SESSION["area"] = $area;
             $_SESSION["rol"] = $rol;
             
             $sentencia = "select * from menuxrol where rol='$rol' limit 1;";
