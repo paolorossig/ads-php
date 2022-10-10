@@ -55,6 +55,8 @@
             </thead>
             <tbody>
                 <?php
+                    $cantidadOrden = 0;
+                    
                     if (isset($codOrden)) {
                         $enlace = mysqli_connect("localhost", "root", "", "GoodCookies");
                         $sentencia_orden = "select cantidad from orden where cod='$codOrden';";
